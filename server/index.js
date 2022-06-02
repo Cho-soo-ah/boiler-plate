@@ -19,9 +19,9 @@ mongoose
 
 app.get("/", (req, res) => res.send("Hello World"));
 
-app.get("/api/hello", (req, res) => {
-  res.send("hiiiiiiiiiiiiiiiii");
-});
+// app.get("/api/hello", (req, res) => {
+//   res.send("hiiiiiiiiiiiiiiiii");
+// });
 
 // 회원가입
 app.post("/api/users/register", (req, res) => {

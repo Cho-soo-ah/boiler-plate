@@ -1,60 +1,98 @@
 import React, { useState } from "react";
-import { Axios } from "axios";
+import { Form, Input, Button, Layout } from "antd";
+
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_action";
 
-function LoginPage(props) {
+const { Content } = Layout;
+
+const validateMessages = {
+  required: "${label} 을 입력하세요.",
+  types: {
+    email: "유효한 이메일을 입력하세요.",
+    number: "비밀번호가 올바르지 않습니다.",
+  },
+};
+
+const LoginForm = ({ onChange, fields }) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const onEmailHandler = (e) => {
-    setEmail(e.currentTarget.value);
-  };
-  const onPasswordHandler = (e) => {
-    setPassword(e.currentTarget.value);
-  };
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-
-    let body = { email: email, password: password };
+  const onSubmitHandler = (value) => {
+    console.log(value);
+    let body = value;
 
     dispatch(loginUser(body)).then((response) => {
       if (response.payload.loginSuccess) {
-        props.history.push("/");
+        document.location = "/";
       } else {
         alert("error");
       }
     });
-
-    // Axios.post("/api/users/login", body).then((response) => {
-    //   console.log(response);
-    // });
   };
-
   return (
-    <div
+    <Form
+      name="LoginForm"
+      validateMessages={validateMessages}
+      fields={fields}
+      onFieldsChange={(_, allFields) => {
+        onChange(allFields);
+        console.log("allFields", allFields);
+      }}
+      onFinish={onSubmitHandler}
+      style={{ width: "350px" }}
+    >
+      <Form.Item
+        name="email"
+        rules={[
+          {
+            required: true,
+            type: "email",
+          },
+        ]}
+      >
+        <Input placeholder="email" size="large" />
+      </Form.Item>
+      <Form.Item
+        name="password"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input placeholder="password" size="large" />
+      </Form.Item>
+      <Form.Item style={{ justifyContent: "flex-end" }}>
+        <Button type="primary" htmlType="submit" block size="large">
+          Login
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
+
+function LoginPage() {
+  const [fields, setFields] = useState([
+    {
+      name: ["email", "password"],
+    },
+  ]);
+  return (
+    <Content
       style={{
+        padding: "50px",
+        width: "100vw",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100vh",
       }}
     >
-      <form
-        style={{ display: "flex", flexDirection: "column" }}
-        onSubmit={onSubmitHandler}
-      >
-        <h2>Login</h2>
-        <label>Email</label>
-        <input type="email" value={email} onChange={onEmailHandler} />
-        <label>Password</label>
-        <input type="password" value={password} onChange={onPasswordHandler} />
-        <br />
-        <button type="submit">Login</button>
-      </form>
-    </div>
+      <LoginForm
+        fields={fields}
+        onChange={(newFields) => {
+          setFields(newFields);
+        }}
+      />
+    </Content>
   );
 }
 

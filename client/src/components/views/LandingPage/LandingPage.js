@@ -1,23 +1,29 @@
-import React, { useEffect } from "react";
-import axios from "axios";
+import React from "react";
+import { Layout, Typography } from "antd";
+
+const { Title } = Typography;
+const { Content, Footer } = Layout;
 
 function LandingPage() {
-  //   useEffect(() => {
-  //     axios.get("/api/hello").then((response) => console.log(response.data));
-  //   }, []);
-
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100vh",
-      }}
-    >
-      <h2>Boiler Plate</h2>
-    </div>
+    <>
+      <Content
+        style={{
+          padding: "50px",
+        }}
+      >
+        <div className="site-layout-content">
+          <Title level={3}>Hiii~~~</Title>
+        </div>
+      </Content>
+      <Footer
+        style={{
+          textAlign: "center",
+        }}
+      >
+        Boiler Plate © 2022
+      </Footer>
+    </>
   );
 }
 

@@ -23,7 +23,8 @@ const LoginForm = ({ onChange, fields }) => {
 
     dispatch(loginUser(body)).then((response) => {
       if (response.payload.loginSuccess) {
-        document.location = "/";
+        // document.location = "/";
+        alert("login");
       } else {
         alert("error");
       }

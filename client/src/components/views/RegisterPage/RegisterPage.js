@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import { Form, Input, Button, Layout } from "antd";
 
 import { useDispatch } from "react-redux";
@@ -118,4 +119,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default withRouter(RegisterPage);
